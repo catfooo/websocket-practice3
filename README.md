@@ -1,3 +1,13 @@
+# node server.js
+
+# having cors error. no hope how to proceed... while execute socket io. do i even need to use this? was just wanted to understand what websocket is and make use of it if i need it since i heard this supports better communication like real time...
+
+Access to XMLHttpRequest at 'http://localhost:3001/socket.io/?EIO=4&transport=polling&t=Opfc6FQ' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+socket__io-client.js?v=1dca9005:898 
+        
+        
+       GET http://localhost:3001/socket.io/?EIO=4&transport=polling&t=Opfc6FQ net::ERR_FAILED
+
 #   https://stackoverflowteams.com/c/technigo/questions/5140
  Technigo
 

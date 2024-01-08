@@ -1,27 +1,68 @@
-console.log('Server started')
-const WebSocket = require('ws')
+const express = require('express') // using express
+const socketIO = require('socket.io')
+const http = require('http')
+const cors = require('cors')
 
-// const server = new WebSocket.Server({ port: 3000 })
-const server = new WebSocket.Server({ port: 3001 })
+const port = process.env.PORT || 3001
+const app = express()
+const server = http.createServer(app) // creating http server using http module in node js and attaching your express application ('app') to it
+const io = socketIO(server) // create socket io instance attached to http server ('server')
 
-server.on('connection', (socket) => {
+// // allow all origins for socket io
+// io.origins('*:*')
+// app.use(cors()) // enable cors for all routes
+const corsOptions = {
+    origin: 'http://localhost:5173', // Replace with your client's origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+  };
+  
+  app.use(cors(corsOptions));
+  
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/my-vite-app/index.html")
+})
+
+// server.listen(port)
+server.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`)
+    console.log('Server started')
+})
+
+// not sure that i need this, but got this from chatgpt
+// // Serve the Socket.IO library on the same path as the server
+// app.get("/socket.io/socket.io.js", (req, res) => {
+//     res.sendFile(__dirname + "/node_modules/socket.io-client/dist/socket.io.js");
+//   });
+
+// socket io logic, connection handling, etc.
+io.on('connection', (socket) => {
     console.log('Client connected')
 
     // send a msg to the client when connected
     socket.send('hello client')
 
-    // handle messages from clients
+    // handel socket event (message from client)
     socket.on('message', (message) => {
         console.log(`Received message: ${message}`)
-         // echo the msg
+         // echo the msg back to the client
          socket.send(`You said: ${message}`)
     })
 
-    // // echo the msg
-    // socket.send(`You said: ${message}`)
-
-    // handle connection closing
-    socket.on('close', () => {
+     // handle socket connection closing
+     // In Socket.IO, the event for handling client disconnection is disconnect, not close. 
+     socket.on('disconnect', () => {
         console.log('Client disconnected')
     })
+
+    // err event listener
+    socket.on('error', (error) => {
+        console.error('WebSocket error:', error)
+    })
 })
+
+
+
+
