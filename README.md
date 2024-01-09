@@ -1,5 +1,59 @@
 # node server.js
 
+# client (chrome console)
+Socket.IO connection opened
+App.jsx:24 Received message from server: hello client
+App.jsx:24 Received message from server: You said: Hello, server!
+
+# server (vscode terminal)
+websocket-practice2 git:(main) ✗ node server.js
+Server running on http://localhost:3001
+Server started
+Client connected
+Client connected
+Received message: Hello, server!
+Client connected
+Received message: Hello, server!
+Client connected
+Received message: Hello, server!
+Received message: Hello, server!
+Client connected
+Received message: Hello, server!
+Client connected
+Received message: Hello, server!
+Client connected
+Received message: Hello, server!
+Client disconnected
+Client disconnected
+Client disconnected
+Client disconnected
+Client disconnected
+Client disconnected
+Client disconnected
+
+# difference from WebSocket
+: this seems to connect continuously. at websocket, once it connected, excuting the job, and disconnected, connection is not repeating. idk this makes difference at actual function or speed, but, at least, it looks like that to me bcs log?. 
+
+# chatgpt
+The behavior you're observing in the server logs suggests that the client is continuously connecting and disconnecting. This behavior might be due to the way Socket.IO handles connections and disconnections.
+
+In Socket.IO, connections can be long-lived, and the client can automatically attempt to reconnect if the connection is lost. This is part of Socket.IO's resilience against network issues. When you see repeated "Client connected" and "Client disconnected" messages, it indicates that the client is making repeated connection attempts.
+
+If you want to control or limit the reconnection behavior, you can configure it on the client side when initializing the socket. For example:
+
+javascript
+Copy code
+const socket = io('http://localhost:3001', {
+  reconnection: false, // Disable automatic reconnection
+});
+By setting reconnection to false, you disable automatic reconnection attempts.
+
+Keep in mind that Socket.IO handles connections in a more complex manner compared to basic WebSocket. It supports features like automatic reconnection, event acknowledgment, and more, which might result in different connection/disconnection patterns in the logs.
+
+# cors err solved by adding extension to chrome. might need to learn how to whitelist in future
+https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf
+
+
 # having cors error. no hope how to proceed... while execute socket io. do i even need to use this? was just wanted to understand what websocket is and make use of it if i need it since i heard this supports better communication like real time...
 
 Access to XMLHttpRequest at 'http://localhost:3001/socket.io/?EIO=4&transport=polling&t=Opfc6FQ' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
