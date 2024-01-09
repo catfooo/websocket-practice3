@@ -13,22 +13,37 @@ const App = () => {
         //     socket.send('Hello, server!')
         // })
         socket.on('connect', () => {
-            console.log('Socket.IO connection opened')
-            socket.emit('message', 'Hello, server!')
+            // console.log('Socket.IO connection opened')
+            console.log('connected to server')
+            // socket.emit('message', 'Hello, server!')
+            // socket.emit('createMessage', 'Hello, server!')
         })
 
         // socket.addEventListener('message', (event) => {
         //     console.log(`Received message from server: ${event.data}`)
         // })
-        socket.on('message', (data) => {
-            console.log(`Received message from server: ${data}`)
+        // socket.on('message', (data) => {
+        //     console.log(`Received message from server: ${data}`)
+        // })
+        // (cat) is placeholder for received data, so you can use whatever you want. message, data,...
+        // message listener from server
+        socket.on('newMessage', (cat) => {
+            console.log('New message from server:', cat)
+        })
+
+        // emits message from user side
+        socket.emit('createMessage', {
+            to:'john@ds',
+            text:'what kjkljd'
         })
 
         // socket.addEventListener('close', (event) => {
         //     console.log('WebSocket connection closed')
         // })
+        // when disconnected from server
         socket.on('disconnect', () => {
-            console.log('Socket.IO connection closed')
+            // console.log('Socket.IO connection closed')
+            console.log('Disconnect from server')
         })
 
         // socket.addEventListener('error', (event) => {

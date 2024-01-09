@@ -1,5 +1,43 @@
 # node server.js
 
+# https://www.geeksforgeeks.org/web-socket-in-node-js/
+
+# output
+
+client:
+
+connected to server
+App.jsx:31 New message from server: ObjectcreatedAt: 123from: "jen@mds"text: "hepppp"[[Prototype]]: Object
+
+server:
+
+websocket-practice2 git:(main) ✗ node server.js
+Server running on http://localhost:3001
+Server started
+New user connected
+disconnected from user
+New user connected
+newMessage { to: 'john@ds', text: 'what kjkljd' }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # client (chrome console)
 Socket.IO connection opened
 App.jsx:24 Received message from server: hello client
